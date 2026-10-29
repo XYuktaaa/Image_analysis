@@ -2,7 +2,7 @@
 
 MediLens is a research prototype that uses a YOLOv8n object-detection model to draw bounding boxes around nine annotated fetal ultrasound structures. A Flask web interface accepts an image and displays model-generated detections and confidence scores.
 
-> **Research prototype only.** This project is not a medical device, does not provide a diagnosis, and must not be used to make clinical decisions. Model outputs require qualified clinical review.
+>  This project is not a medical device, does not provide a diagnosis, and must not be used to make clinical decisions. Model outputs require qualified clinical review.
 
 ## Features
 
@@ -38,7 +38,7 @@ Both models were evaluated on the same 72-image internal test set with 624 annot
 | mAP@50 | 93.02% | 96.90% |
 | mAP@50–95 | 48.59% | 57.48% |
 
-These are the project's recorded internal-test results. They do not establish clinical validity. Confirm patient/scan-level independence before making claims about test-set independence. The external non-standard image experiment was qualitative only: 92 images produced 852 detections at confidence 0.01; at confidence 0.25, 88 images had at least one detection and 4 had none, with 388 detections overall. No accuracy metrics can be calculated for those images without ground-truth labels.
+These are the project's recorded internal-test results. No clinical validity though. The external non-standard image experiment was qualitative only: 92 images produced 852 detections at confidence 0.01; at confidence 0.25, 88 images had at least one detection and 4 had none, with 388 detections overall. No accuracy metrics can be calculated for those images without ground-truth labels.
 
 ## Project structure
 
@@ -57,17 +57,6 @@ ultrasound-analysis-old/
 └── README.md
 ```
 
-## Setup
-
-Use the Python environment in which you have already installed a compatible version of PyTorch and Ultralytics. On your Void Linux machine:
-
-```bash
-cd ~/devel/wip/python/ultrasound-analysis-old
-source .venv/bin/activate
-pip install flask ultralytics opencv-python
-```
-
-Place `best-expanded-50.pt` at `models/best-expanded-50.pt`. This bundle does not include model weights or the dataset.
 
 Start the application:
 
@@ -75,19 +64,7 @@ Start the application:
 python run.py
 ```
 
-Open <http://127.0.0.1:5000> in your browser. The app is configured for local CPU inference and binds only to localhost. Do not expose it publicly without adding appropriate security, privacy, and deployment controls.
-
-## Inference settings
-
-The interface defaults to confidence 0.25. Inference uses `imgsz=640`, CPU, and NMS IoU 0.4. These are application defaults, not clinically optimized thresholds. Do not interpret confidence scores as probabilities that a structure is medically normal or correctly identified.
-
-## Limitations and future work
-
-- External non-standard images have not been quantitatively evaluated against ground-truth annotations.
-- Patient-level or scan-level independence of the internal test set has not been established in this documentation.
-- Performance may vary with image view, acquisition settings, image quality, and target visibility.
-- More independent, annotated data and expert review are needed before drawing conclusions about clinical performance.
-- Future work includes formal error analysis, data provenance checks, calibration/threshold evaluation on validation data, and automated tests for the web application.
+udes formal error analysis, data provenance checks, calibration/threshold evaluation on validation data, and automated tests for the web application.
 
 ## Technology stack
 
